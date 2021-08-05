@@ -45,9 +45,10 @@ if(P <= 1)
 else
     %fprintf('\n*** Initializing MIDACO Parallel Mode ***\n');    
     if verLessThan('matlab','8.2')
-      matlabpool close force local % Shut down existing parallel pool
-      matlabpool % Start fresh parallel pool
-    else 
+      parpool close force local % Shut down existing parallel pool
+      parpool % Start fresh parallel pool
+    else
+%     elseif isempty(gcp('nocreate'))
       delete(gcp) % Shut down existing parallel pool   
       parpool % Start fresh parallel pool
     end    

@@ -58,7 +58,7 @@ try
     
     % pumping power
     % Haaland equation for friction
-    rough = 1e-4;
+    rough = 1e-3;
     f = ((-1.8*log((rough/PTC.d_r/1.05/3.7)^1.11+6.9/Re_HTF))^-1)^2;
     dp = PTC.L*f*rho_HTF/2*u_HTF^2/PTC.d_r/1.05;
     p_out = PTC.p_in - dp;

@@ -130,7 +130,7 @@ PUMP_SHX.FLUID = PTC.FLUID;
 PERFORMANCE.W_net = TURBINE_HP.W + TURBINE_LP.W - PUMP.W - PUMP_SHX.W ;
 PERFORMANCE.W_in = PLANT.e_liq*PUMP.mdot + AMBIENT.Gb*PTC.A_ap;
 
-PERFORMANCE.X_in = (PLANT.h_la_in-AMBIENT.h0 - AMBIENT.T0*(PLANT.s_la_in-AMBIENT.s0)) + PTC.X_sun;
+PERFORMANCE.X_in = PLANT.mdot_la*(PLANT.h_la_in-AMBIENT.h0 - AMBIENT.T0*(PLANT.s_la_in-AMBIENT.s0)) + PTC.X_sun;
 PERFORMANCE.X_dest = [PUMP.X_dest, PREHEATER.X_dest, RECUPERATOR.X_dest,...
     TURBINE_HP.X_dest, TURBINE_LP.X_dest, SHX1.X_dest, SHX2.X_dest, PTC.X_dest, PUMP_SHX.X_dest ];
 
@@ -141,10 +141,11 @@ PERFORMANCE.eta_c = PTC.eta_c;
 try
     PREHEATER.h_h_out = py.CoolProp.CoolProp.PropsSI('Hmass','P',AMBIENT.p0,'T',PREHEATER.T_h_out, AMBIENT.FLUID);
     RECUPERATOR.h_h_out = py.CoolProp.CoolProp.PropsSI('Hmass','P',RECUPERATOR.p_h_in,'T',RECUPERATOR.T_h_out, PLANT.FLUID);
-    PERFORMANCE.Qcool = PREHEATER.mdot_h*(AMBIENT.h0-PREHEATER.h_h_out) + ...
-        RECUPERATOR.mdot_h*(AMBIENT.h0-RECUPERATOR.h_h_out);
+    PERFORMANCE.Qcool = PREHEATER.mdot_h*(AMBIENT.h0-PREHEATER.h_h_out);
+    PERFORMANCE.COP = PERFORMANCE.Qcool/(PLANT.mdot_la*PLANT.e_liq+PUMP.W);
 catch
-    PERFORMANCE.Qcool = 0;
+    PERFORMANCE.Qcool = NaN;
+    PERFORMANCE.COP = NaN;
 end
 
 end
