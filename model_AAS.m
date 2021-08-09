@@ -143,7 +143,17 @@ try
     RECUPERATOR.h_h_out = py.CoolProp.CoolProp.PropsSI('Hmass','P',RECUPERATOR.p_h_in,'T',RECUPERATOR.T_h_out, PLANT.FLUID);
     PERFORMANCE.Qcool = PREHEATER.mdot_h*(AMBIENT.h0-PREHEATER.h_h_out);
     PERFORMANCE.COP = PERFORMANCE.Qcool/(PLANT.mdot_la*PLANT.e_liq+PUMP.W);
+    phase_t1_out = py.CoolProp.CoolProp.PropsSI('Phase','T',TURBINE_HP.T_out,'P',TURBINE_HP.p_out,PLANT.FLUID);
+    phase_t2_out = py.CoolProp.CoolProp.PropsSI('Phase','T',TURBINE_LP.T_out,'P',TURBINE_LP.p_out,PLANT.FLUID);
+    if round(phase_t1_out) == 6 || round(phase_t2_out) == 6
+        PERFORMANCE.eta_rt = NaN;
+        PERFORMANCE.eta_ex = NaN;
+        PERFORMANCE.Qcool = NaN;
+        PERFORMANCE.COP = NaN;
+    end
 catch
+    PERFORMANCE.eta_rt = NaN;
+    PERFORMANCE.eta_ex = NaN;
     PERFORMANCE.Qcool = NaN;
     PERFORMANCE.COP = NaN;
 end

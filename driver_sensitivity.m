@@ -23,48 +23,11 @@ solution = zeros(Np, 12);
 eta_rt = zeros(Np,1); eta_II = zeros(Np,1); COP = zeros(Np,1);
 parfor i = 1:Np
     x = [ mdot_la(i), mdot_pre(i), alpha_p_int(i), mdot_ptc(i), alpha1(i),  NTU_pre(i), NTU_rec(i), NTU_shx1(i), NTU_shx2(i) ];
-    f = problem( x, AMBIENT, PLANT, NTU, PTC, SHX );
-    eta_rt(i) = f(1);
-    eta_II(i) = f(2);
-    COP(i)  = f(3);
+    [f,~] = fcn_evaluation( x, AMBIENT, PLANT, NTU, PTC, SHX );
+    eta_rt(i) = -f(1);
+    eta_II(i) = -f(2);
+    sprintf('%i, %2.2f, %2.2f',i,-f(1),-f(2))
 end
 solution(:,1:9) = [mdot_la, mdot_pre, alpha_p_int, mdot_ptc, alpha1, NTU_pre, NTU_rec, NTU_shx1, NTU_shx2];
 solution(:,10:12) = [eta_rt, eta_II, COP];
- save('solution.mat','solution')
-
-function f = problem( x, AMBIENT, PLANT, NTU, PTC, SHX )
-
-PLANT.mdot_la = x(1);
-PLANT.mdot_preheater = x(2);
-PLANT.alpha_p_int = x(3);
-PLANT.p_int = AMBIENT.p0 + (PLANT.p_pump-AMBIENT.p0)*PLANT.alpha_p_int;
-PTC.mdot = x(4);
-SHX.alpha1 = x(5);
-SHX.mdot1 = PTC.mdot*SHX.alpha1;
-SHX.alpha2 = 1-SHX.alpha1;
-SHX.mdot2 = PTC.mdot*SHX.alpha2;
-NTU.preheat = x(6);
-NTU.recup = x(7);
-NTU.shx1 = x(8);
-NTU.shx2 = x(9);
-
-% AAS config
-options = optimoptions('fsolve','Display','None','UseParallel',false);
-func = @(T) model_AAS( T, AMBIENT, PLANT, NTU, PTC, SHX );
-x0 = ones(12,1);
-[T, fval, exitflag, output] = fsolve(func, x0, options);
-[~, AAS] = ...
-    model_AAS( T, AMBIENT, PLANT, NTU, PTC, SHX );
-
-if exitflag <= 0 || AAS.eta_II <= 0 || AAS.eta_rt <= 0
-    AAS.eta_II = NaN;
-    AAS.eta_rt = NaN;
-    AAS.COP = NaN;
-end
-
-% Objective functions F(X)
-f(1) = AAS.eta_rt;
-f(2) = AAS.eta_II;
-f(3) = AAS.COP;
-
-end
+save('paper\solution_sensitivity.mat','solution')

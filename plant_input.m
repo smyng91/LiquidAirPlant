@@ -14,6 +14,7 @@ PLANT.e_liq = 0.42*1e3*3600;
 PLANT.T_store = 79;
 PLANT.p_store = 0.2e6;
 
+
 % plant
 PLANT.mdot_la = 0.6;
 PLANT.p_pump = 20e6;

@@ -49,7 +49,7 @@ p = [PUMP.p_in, PUMP.p_out, TURBINE_HP.p_out, TURBINE_LP.p_out];
 
 % create saturation dome
 Tcrit = py.CoolProp.CoolProp.PropsSI('Tcrit','',0,'',0,fluid);
-Tsat = linspace(0,Tcrit,1000);
+Tsat = linspace(0,Tcrit,2000);
 
 for i=1:length(Tsat)
     try

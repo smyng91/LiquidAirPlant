@@ -1,0 +1,87 @@
+################################################################################## 
+#                                                                                # 
+# MIDACO PlotTool Setting File                                                   # 
+# ----------------------------                                                   # 
+#                                                                                # 
+# This file saves the complete settings of the previous PlotTool session.        # 
+# Therefore: This file acts as the memory of the PlotTool.                       # 
+#                                                                                # 
+# If PlotTool is launched and this file is present in the same directory,        # 
+# PlotTool will import all settings from this file.                              # 
+#                                                                                # 
+# If PlotTool is launched and this file is *NOT* present in the same directory,  # 
+# PlotTool will restore all its settings to their default value.                 # 
+#                                                                                # 
+# PlotTool automatically saves its settings by creating this file at every       # 
+# PLOT or LIVE event. Additionally, users can save specific settings to          # 
+# custom settings file using the SAVE option. Users can freely choose            # 
+# any name (and extension name) for those files, for example:                    # 
+#                                                                                # 
+# PlotTool.set_USER1                                                             # 
+#                                                                                # 
+# *** Feel free to change the values in this file directly & launch PlotTool *** # 
+#                                                                                # 
+################################################################################## 
+
+ source_file          =&= C:/Users/smyng/Dropbox/Research/_Codes/LiquidAirPlant/paper/multi_objective/MIDACO_PARETOFRONT.TXT
+ x_axis               =&= objective 1
+ y_axis               =&= objective 2
+ z_axis               =&= 
+ figure_title         =&= Pareto Front
+ x_label              =&= X-Axis
+ y_label              =&= Y-Axis
+ z_label              =&= Z-Axis
+ colorbar_objective   =&= objective 1
+ colorbar_label       =&= Colorbar
+ colorbar_scheme      =&= spectral
+ markersize_objective =&= objective 1
+ markersize_start     =&= 100
+ markersize_end       =&= 100
+ marker_symbol        =&= circle
+ transparency         =&= 0.0
+ solution_highlight   =&= 1
+ save_figure          =&= 1
+ show_grid            =&= 1
+ background_position  =&= 0
+ x_limit_left         =&= 
+ x_limit_right        =&= 
+ y_limit_bottom       =&= 
+ y_limit_top          =&= 
+ z_limit_start        =&= 
+ z_limit_end          =&= 
+ label_position       =&= upper right corner
+ front_label          =&= Pareto Front
+ solution_label       =&= MIDACO Solution
+ add_file1            =&= MIDACO_HISTORY.TXT
+ add_color1           =&= blue
+ add_marker1          =&= square
+ add_size1            =&= 50
+ add_label1           =&= Add-File1 Data
+ add_file2            =&= 
+ add_color2           =&= blue
+ add_marker2          =&= star
+ add_size2            =&= 50
+ add_label2           =&= Add-File2 Data
+ add_file3            =&= MIDACO_HISTORY.TXT
+ add_color3           =&= black
+ add_marker3          =&= +
+ add_size3            =&= 25
+ add_label3           =&= Add-File3 Data
+
+ ################################### 
+ # settings for solution highlight #
+ ################################### 
+
+ solution_highlight_marker_symbol   =&= HEXAGON
+ solution_highlight_relative_size   =&= 20
+ solution_highlight_relative_alpha  =&= 0.5
+ solution_highlight_color           =&= green
+ solution_highlight_edgecolor       =&= red
+
+ ################################# 
+ # additional advanced settings  #
+ ################################# 
+
+ GUI_start_position_x           =&= 664
+ GUI_start_position_y           =&= 256
+ number_of_colorbar_marks       =&= 10
