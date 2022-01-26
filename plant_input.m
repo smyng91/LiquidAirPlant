@@ -14,11 +14,10 @@ PLANT.e_liq = 0.42*1e3*3600;
 PLANT.T_store = 79;
 PLANT.p_store = 0.2e6;
 
-
 % plant
 PLANT.mdot_la = 0.6;
 PLANT.p_pump = 20e6;
-PLANT.mdot_preheater = 1;
+PLANT.mdot_preheater = 5;
 PLANT.p_int = AMBIENT.p0 + (PLANT.p_pump-AMBIENT.p0)*.01;
 PLANT.h_la_in = py.CoolProp.CoolProp.PropsSI('Hmass','P',PLANT.p_store,'T',PLANT.T_store, PLANT.FLUID);
 PLANT.s_la_in = py.CoolProp.CoolProp.PropsSI('Smass','P',PLANT.p_store,'T',PLANT.T_store, PLANT.FLUID);
@@ -29,7 +28,7 @@ PLANT.eta_turbine = 0.75;
 PLANT.eta_comp = 0.75;
 
 % PTC
-PTC.mdot = 5;
+PTC.mdot = 10;
 PTC.FLUID = 'INCOMP::S800';
 PTC.eta_opt = 0.726;
 PTC.p_in = 0.2e6;
@@ -47,17 +46,17 @@ PTC.A_c = pi()*PTC.d_c*PTC.L;
 PTC.Cr = PTC.A_ap/PTC.A_r;
 
 % SHX
-SHX.alpha1 = 0.5;
+SHX.alpha1 = 0.4;
 SHX.mdot1 = PTC.mdot*SHX.alpha1;
 SHX.alpha2 = 1-SHX.alpha1;
 SHX.mdot2 = PTC.mdot*SHX.alpha2;
 
 % NTUs
 NTU.total = 12;
-NTU.preheat = 2;
-NTU.recup = 2;
-NTU.shx1 = 2;
-NTU.shx2 = 2;
+NTU.preheat = 3;
+NTU.recup = 3;
+NTU.shx1 = 3;
+NTU.shx2 = 3;
 
     
 

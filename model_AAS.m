@@ -39,7 +39,8 @@ PREHEATER.p_c_in = PUMP.p_out;
 PREHEATER.p_c_out = PREHEATER.p_c_in;
 PREHEATER.p_h_out = PREHEATER.p_h_in;
 PREHEATER.NTU = NTU.preheat;
-[x, PREHEATER.X_dest] = fcn_hx( PREHEATER, AMBIENT );
+[x, PREHEATER.X_dest,eff] = fcn_hx( PREHEATER, AMBIENT );
+PREHEATER.eff = eff;
 dy(1) = abs( x(1) - PREHEATER.T_c_out )/AMBIENT.T0;
 dy(2) = abs( x(2) - PREHEATER.T_h_out )/AMBIENT.T0;
 
@@ -55,7 +56,8 @@ RECUPERATOR.p_h_in = AMBIENT.p0;
 RECUPERATOR.p_c_out = RECUPERATOR.p_c_in;
 RECUPERATOR.p_h_out = RECUPERATOR.p_h_in;
 RECUPERATOR.NTU = NTU.recup;
-[x, RECUPERATOR.X_dest] = fcn_hx( RECUPERATOR, AMBIENT );
+[x, RECUPERATOR.X_dest,eff] = fcn_hx( RECUPERATOR, AMBIENT );
+RECUPERATOR.eff = eff;
 dy(3) = abs( x(1) - RECUPERATOR.T_c_out )/AMBIENT.T0;
 dy(4) = abs( x(2) - RECUPERATOR.T_h_out )/AMBIENT.T0;
 
@@ -79,7 +81,8 @@ SHX1.p_c_in = RECUPERATOR.p_c_out;
 SHX1.p_c_out = SHX1.p_c_in;
 SHX1.p_h_out = SHX1.p_h_in;
 SHX1.NTU = NTU.shx1;
-[x, SHX1.X_dest] = fcn_hx( SHX1, AMBIENT );
+[x, SHX1.X_dest,eff] = fcn_hx( SHX1, AMBIENT );
+SHX1.eff = eff;
 dy(5) = abs( x(1) - SHX1.T_c_out )/AMBIENT.T0;
 dy(6) = abs( x(2) - SHX1.T_h_out )/AMBIENT.T0;
 
@@ -104,7 +107,8 @@ SHX2.p_c_in = TURBINE_HP.p_out;
 SHX2.p_c_out = SHX2.p_c_in;
 SHX2.p_h_out = SHX2.p_h_in;
 SHX2.NTU = NTU.shx2;
-[x, SHX2.X_dest] = fcn_hx( SHX2, AMBIENT );
+[x, SHX2.X_dest,eff] = fcn_hx( SHX2, AMBIENT );
+SHX2.eff = eff;
 dy(7) = abs( x(1) - SHX2.T_c_out )/AMBIENT.T0;
 dy(8) = abs( x(2) - SHX2.T_h_out )/AMBIENT.T0;
 
