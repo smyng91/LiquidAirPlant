@@ -1,6 +1,6 @@
 # LiquidAirPlant
 
-## Reference
+## Citation
 Please cite the following paper if you reference/use the code
 > Energy
 
