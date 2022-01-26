@@ -8,6 +8,6 @@ LiquidAirPlant is a MATLAB code allowing its users to model various liquid air p
 > Please cite the following paper if you reference/use the code
 
 ## Dependencies
-* MATLAB 2021a or above
+* [MATLAB 2021a or above](https://www.mathworks.com/products/matlab.html)
 * [CoolProp for MATLAB](http://www.coolprop.org/coolprop/wrappers/MATLAB/index.html)
 *  
