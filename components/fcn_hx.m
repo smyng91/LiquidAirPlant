@@ -1,4 +1,4 @@
-function [y, X_dest] = fcn_hx( HX, AMBIENT )
+function [y, X_dest, Q] = fcn_hx( HX, AMBIENT )
 
 % HX model based on effectiveness-NTU
 
@@ -43,11 +43,15 @@ try
     X_dest = HX.mdot_c*(h_c_in-h_c_out-AMBIENT.T0*(s_c_in-s_c_out)) + ...
         HX.mdot_h*(h_h_in-h_h_out-AMBIENT.T0*(s_h_in-s_h_out));
     
+    Q = effectiveness*Cmin*(HX.T_h_in-HX.T_c_in);
+    
 catch
     
     y(1) = 10000;
     y(2) = 10000;
     X_dest = 10000;
+    effectiveness = 0;
+    Q = 0;
     
 end
 
