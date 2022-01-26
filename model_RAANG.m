@@ -1,9 +1,7 @@
 function [y, PLANT ] = model_RAANG( T, PARAM )
+% LAPP model - Recuperative Ambient Air/Natural Gas
+
 global data_Ts_RAANG
-%
-% Liquid air plant model:
-% Configuration - Recuperative Ambient Air Natural Gas
-%
 
 PREHEATER.T_c_out = T(1)*PARAM.T0;
 PREHEATER.T_h_out = T(2)*PARAM.T0;
@@ -14,6 +12,9 @@ RECUPERATOR.T_h_out = T(6)*PARAM.T0;
 TURBINE_LP.T_out = T(7)*PARAM.T0;
 TURBINE_RECUP.T_out = T(8)*PARAM.T0;
 
+% error/exception handling is needed to avoid divergence in physically
+% infeasible design spaces, where CoolProp will output error and stop the
+% code.
 try
     
     % pump
@@ -149,9 +150,7 @@ try
     PLANT.W_net = TURBINE_HP.W + TURBINE_LP.W + TURBINE_RECUP.W - COMPRESSOR.W - PUMP.W ;
     PLANT.W_in = PARAM.e_liq*PUMP.mdot + 0.6*PARAM.Q_NG(1)/6.3*12.8;
     PLANT.eta_rt = PLANT.W_net/PLANT.W_in;
-    
-    
-    
+
     s1a = py.CoolProp.CoolProp.PropsSI('Smass','P',PARAM.p0,'T',PARAM.T0,PREHEATER.FLUID_h);
     s2a = py.CoolProp.CoolProp.PropsSI('Smass','P',PREHEATER.p_h_out,'T',PREHEATER.T_h_out,PREHEATER.FLUID_h);
     s3a = py.CoolProp.CoolProp.PropsSI('Smass','P',COMPRESSOR.p_out,'T',COMPRESSOR.T_out,COMPRESSOR.FLUID);

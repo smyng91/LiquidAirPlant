@@ -1,10 +1,17 @@
+% driver simulate desired liquid air power plants (LAPPs). For more info.,
+% please refer to https://smyng91.github.io/LiquidAirPlant/. If you
+% use/reference the code, please cite the following paper:
+% 
+% 
+% 
+% Dependency: CoolProp for MATLAB
+% 
 clear; clc; close all
-
 addpath('./components/');
 options = optimoptions('fsolve','Display','None',...
     'UseParallel',false);
 
-%% run
+% read input
 plant_input;
 
 % AAS config
@@ -14,9 +21,3 @@ x0 = ones(12,1);
 [~, AAS, PUMP, PUMP_SHX, PREHEATER, RECUPERATOR, ...
     SHX, SHX1, SHX2, TURBINE_HP, TURBINE_LP, PTC] = ...
     model_AAS( T, AMBIENT, PLANT, NTU, PTC, SHX );
-% AAS
-
-AAS.eta_rt
-AAS.eta_II
-AAS.COP
-% plot_Ts;

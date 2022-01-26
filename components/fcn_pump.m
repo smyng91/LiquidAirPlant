@@ -2,6 +2,9 @@ function [W, T_out, X_dest] = fcn_pump( PUMP, AMBIENT )
 
 % pump model
 
+% error/exception handling is needed to avoid divergence in physically
+% infeasible design spaces, where CoolProp will output error and stop the
+% code.
 try
     
 h_in = py.CoolProp.CoolProp.PropsSI('Hmass','P',PUMP.p_in,'T',PUMP.T_in,PUMP.FLUID);

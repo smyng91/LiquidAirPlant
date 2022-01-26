@@ -2,6 +2,9 @@ function [T, p_out, X_sun, X_dest, eta_c] = fcn_PTC( PTC, AMBIENT )
 
 % PTC model
 
+% error/exception handling is needed to avoid divergence in physically
+% infeasible design spaces, where CoolProp will output error and stop the
+% code.
 try
     
     % evaluate properties

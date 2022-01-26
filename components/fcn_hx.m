@@ -8,6 +8,9 @@ p_h_out = HX.p_h_in;
 T_h_avg = (HX.T_h_in + HX.T_h_out)/2;
 T_c_avg = (HX.T_c_in + HX.T_c_out)/2;
 
+% error/exception handling is needed to avoid divergence in physically
+% infeasible design spaces, where CoolProp will output error and stop the
+% code.
 try
     
     cp_h = py.CoolProp.CoolProp.PropsSI('CPMASS','P',HX.p_h_in,'T',T_h_avg,HX.FLUID_h);

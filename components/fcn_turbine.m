@@ -2,6 +2,9 @@ function [W, T_out, X_dest] = fcn_turbine( TURBINE, AMBIENT )
 
 % turbine model
 
+% error/exception handling is needed to avoid divergence in physically
+% infeasible design spaces, where CoolProp will output error and stop the
+% code.
 try 
     
 h_in = py.CoolProp.CoolProp.PropsSI('Hmass','P',TURBINE.p_in,'T',TURBINE.T_in,TURBINE.FLUID);

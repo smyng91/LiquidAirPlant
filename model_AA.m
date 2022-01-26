@@ -1,9 +1,8 @@
 function [y, PLANT] = model_AA( T, PARAM )
- global data_Ts_AA
-%
-% Liquid air plant model
-% Configuration - Ambient Air
-%
+% LAPP model - Ambient Air
+
+global data_Ts_AA
+
 options = optimoptions('fsolve','Display','none');
 
 PREHEATER.T_c_out = T(1)*PARAM.T0;
@@ -72,7 +71,10 @@ PLANT.W_net = TURBINE_HP.W + TURBINE_LP.W - PUMP.W;
 PLANT.W_in = (0.5*1.e3*3600)*PUMP.mdot;
 PLANT.eta_rt = PLANT.W_net/PLANT.W_in;
 
-try 
+% error/exception handling is needed to avoid divergence in physically
+% infeasible design spaces, where CoolProp will output error and stop the
+% code.
+try
     s1 = py.CoolProp.CoolProp.PropsSI('Smass','P',PUMP.p_in,'T',PUMP.T_in,PUMP.FLUID);
     s2 = py.CoolProp.CoolProp.PropsSI('Smass','P',PUMP.p_out,'T',PUMP.T_out,PUMP.FLUID);
     s3 = py.CoolProp.CoolProp.PropsSI('Smass','P',PREHEATER.p_c_out,'T',PREHEATER.T_c_out,PREHEATER.FLUID_c);
@@ -83,4 +85,3 @@ try
 catch
     y = 1000*ones(length(T),1);
 end
-    
