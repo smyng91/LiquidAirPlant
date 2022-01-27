@@ -2,7 +2,10 @@
 % please refer to https://smyng91.github.io/LiquidAirPlant/. If you
 % use/reference the code, please cite the following paper:
 % 
+% Energy
 % 
+% Also check out driver_verification for other configurations besides
+% the solar-driven LAPP.
 % 
 % Dependency: CoolProp for MATLAB
 % 
@@ -11,6 +14,7 @@ addpath('./components/');
 options = optimoptions('fsolve','Display','None',...
     'UseParallel',false);
 
+%%
 % read input
 plant_input;
 
@@ -21,3 +25,4 @@ x0 = ones(12,1);
 [~, AAS, PUMP, PUMP_SHX, PREHEATER, RECUPERATOR, ...
     SHX, SHX1, SHX2, TURBINE_HP, TURBINE_LP, PTC] = ...
     model_AAS( T, AMBIENT, PLANT, NTU, PTC, SHX );
+AAS

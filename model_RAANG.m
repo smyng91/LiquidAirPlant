@@ -64,7 +64,7 @@ try
     COMBUST1.p_in = REGENERATOR.p_c_out;
     COMBUST1.p_out = COMBUST1.p_in;
     COMBUST1.mdot = REGENERATOR.mdot_c;
-    COMBUST1.Q = PARAM.Q_NG(1)*2/3;
+    COMBUST1.Q = PARAM.Q_NG/2;
     COMBUST1.NTU = PARAM.NTU_combus1;
     [ COMBUST1.T_out, COMBUST1.X_dest ] = fcn_combustor( COMBUST1, PARAM );
     
@@ -83,7 +83,7 @@ try
     COMBUST2.p_in = TURBINE_HP.p_out;
     COMBUST2.p_out = COMBUST2.p_in;
     COMBUST2.mdot = TURBINE_HP.mdot;
-    COMBUST2.Q = PARAM.Q_NG(2)/3;
+    COMBUST2.Q = PARAM.Q_NG/2;
     COMBUST2.NTU = PARAM.NTU_combus2;
     [ COMBUST2.T_out, COMBUST2.X_dest ] = fcn_combustor( COMBUST2, PARAM );
     
@@ -131,7 +131,7 @@ try
     COMBUST3.p_in = RECUPERATOR.p_c_out;
     COMBUST3.p_out = COMBUST3.p_in;
     COMBUST3.mdot = RECUPERATOR.mdot_c;
-    COMBUST3.Q = PARAM.Q_NG(3)/6.3*6.5;   % additional combustion mass flow rate (from Reference)
+    COMBUST3.Q = PARAM.Q_NG/6.3*6.5;   % additional combustion mass flow rate (from Reference)
     COMBUST3.NTU = PARAM.NTU_combus3;
     [ COMBUST3.T_out, COMBUST3.X_dest ] = fcn_combustor( COMBUST3, PARAM );
     
@@ -148,7 +148,7 @@ try
     
     PLANT.W_t = TURBINE_HP.W + TURBINE_LP.W + TURBINE_RECUP.W;
     PLANT.W_net = TURBINE_HP.W + TURBINE_LP.W + TURBINE_RECUP.W - COMPRESSOR.W - PUMP.W ;
-    PLANT.W_in = PARAM.e_liq*PUMP.mdot + 0.6*PARAM.Q_NG(1)/6.3*12.8;
+    PLANT.W_in = PARAM.e_liq*PUMP.mdot + PARAM.eta_cc*(PARAM.Q_NG/6.3*6.5+PARAM.Q_NG);
     PLANT.eta_rt = PLANT.W_net/PLANT.W_in;
 
     s1a = py.CoolProp.CoolProp.PropsSI('Smass','P',PARAM.p0,'T',PARAM.T0,PREHEATER.FLUID_h);

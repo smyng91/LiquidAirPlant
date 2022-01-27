@@ -60,7 +60,7 @@ try
     COMBUST1.p_in = REGENERATOR.p_c_out;
     COMBUST1.p_out = COMBUST1.p_in;
     COMBUST1.mdot = REGENERATOR.mdot_c;
-    COMBUST1.Q = PARAM.Q_NG(1)*2/3;
+    COMBUST1.Q = PARAM.Q_NG/2;
     COMBUST1.NTU = PARAM.NTU_combus1;
     [ COMBUST1.T_out, COMBUST1.X_dest ] = fcn_combustor( COMBUST1, PARAM );
 
@@ -79,7 +79,7 @@ try
     COMBUST2.p_in = TURBINE_HP.p_out;
     COMBUST2.p_out = COMBUST2.p_in;
     COMBUST2.mdot = TURBINE_HP.mdot;
-    COMBUST2.Q = PARAM.Q_NG(2)/3;
+    COMBUST2.Q = PARAM.Q_NG/2;
     COMBUST2.NTU = PARAM.NTU_combus2;
     [ COMBUST2.T_out, COMBUST2.X_dest ] = fcn_combustor( COMBUST2, PARAM );
 
@@ -97,7 +97,7 @@ try
     % 522–529,
     PLANT.W_t = TURBINE_HP.W + TURBINE_LP.W;
     PLANT.W_net = TURBINE_HP.W + TURBINE_LP.W - PUMP.W;
-    PLANT.W_in = PARAM.e_liq*PUMP.mdot + 0.6*PARAM.Q_NG(1);
+    PLANT.W_in = PARAM.e_liq*PUMP.mdot + PARAM.eta_cc*PARAM.Q_NG;
     PLANT.eta_rt = PLANT.W_net/PLANT.W_in;
 
     s1 = py.CoolProp.CoolProp.PropsSI('Smass','P',PUMP.p_in,'T',PUMP.T_in,PUMP.FLUID);
