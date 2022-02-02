@@ -33,11 +33,21 @@ driver
 to simulate a solar-driven LAPP as described in my [paper](https://doi.org/10.1016/j.energy.2022.123324). 
 
 ## Model description
+The input file is
+```MATLAB
+plant_input.m
+```
+I recommend using structures for clarity/simplicity.
+
 You can find all component models under
 ```MATLAB
 .\components\
 ```
-defined as MATLAB functions. If you want to model and simulate other plant configurations, you can follow the same system assembly convention as **model_X.m** where **x** is AA, AANG, RAANG, or AAS. 
+defined as MATLAB functions. If you want to model and simulate other plant configurations, you can follow the same system assembly convention as
+```MATLAB
+model_X.m
+```
+where x is AA, AANG, RAANG, or AAS. 
 
 You may also add new component models as functions, e.g., 
 ```MATLAB
