@@ -16,7 +16,18 @@ Please cite the following paper if you reference/use the code
 * [CoolProp for MATLAB](http://www.coolprop.org/coolprop/wrappers/MATLAB/index.html)
 
 ## Quickstart
-Run
+After cloning the repository, run
 ```MATLAB
 driver_verification
 ```
+in MATLAB to simulate ambient air-driven, natural gas-driven, and recuperative natural gas-driven liquid air power plants (LAPPs) as described in 
+
+[Antonelli, M., Barsali, S., Desideri, U., Giglioli, R., Paganucci, F. and Pasini, G., 2017. Liquid air energy storage: Potential and challenges of hybrid power plants. Applied energy, 194, pp.522-529.](https://doi.org/10.1016/j.apenergy.2016.11.091)
+
+which were referenced as validation cases for the proposed modeling framework.
+
+You can also run 
+```MATLAB
+driver
+```
+to simulate a solar-driven LAPP as described in my [paper](https://doi.org/10.1016/j.energy.2022.123324). 
