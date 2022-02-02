@@ -43,13 +43,13 @@ You can find all component models under
 ```MATLAB
 .\components\
 ```
-defined as MATLAB functions. If you want to model and simulate other plant configurations, you can follow the same system assembly convention as
+defined as MATLAB functions. You may also add new component models as functions, e.g., 
+```MATLAB
+function [out1, out2,...,out] = fcn_componentname( struct1, struct2,...,struct )
+```
+
+If you want to model and simulate other plant configurations, you can follow the same system assembly convention as
 ```MATLAB
 model_X.m
 ```
 where x is AA, AANG, RAANG, or AAS. 
-
-You may also add new component models as functions, e.g., 
-```MATLAB
-function [out1, out2,...,out] = fcn_componentname( struct1, struct2,...,struct )
-```
