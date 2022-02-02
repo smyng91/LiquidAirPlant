@@ -1,7 +1,8 @@
 % driver_verification verifies the liquid air power plant (LAPP) model
 % proposed in
 % 
-% paper
+% S. Yang, Solar-driven liquid air power plant modeling, design space exploration, and multi-objective optimization, Energy, 2022
+% https://doi.org/10.1016/j.energy.2022.123324
 % 
 % against the HYSYS model published in
 % 

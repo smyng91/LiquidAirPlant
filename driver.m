@@ -2,7 +2,8 @@
 % please refer to https://smyng91.github.io/LiquidAirPlant/. If you
 % use/reference the code, please cite the following paper:
 % 
-% Energy
+% S. Yang, Solar-driven liquid air power plant modeling, design space exploration, and multi-objective optimization, Energy, 2022
+% https://doi.org/10.1016/j.energy.2022.123324
 % 
 % Also check out driver_verification for other configurations besides
 % the solar-driven LAPP.
