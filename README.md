@@ -14,3 +14,9 @@ Please cite the following paper if you reference/use the code
 ## Dependencies
 * [MATLAB 2021a or above](https://www.mathworks.com/products/matlab.html)
 * [CoolProp for MATLAB](http://www.coolprop.org/coolprop/wrappers/MATLAB/index.html)
+
+## Quickstart
+Run
+```MATLAB
+driver_verification
+```
