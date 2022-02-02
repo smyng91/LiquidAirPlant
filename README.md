@@ -52,4 +52,4 @@ If you want to model and simulate other plant configurations, you can follow the
 ```MATLAB
 model_X.m
 ```
-where x is AA, AANG, RAANG, or AAS. 
+where X is AA, AANG, RAANG, or AAS. 
