@@ -5,7 +5,7 @@ LiquidAirPlant is a MATLAB code allowing its users to model various liquid air p
 
 ## Citation
 Please cite the following paper if you reference/use the code
-> Energy
+> S. Yang _Solar-driven liquid air power plant modeling, design space exploration, and multi-objective optimization_, Energy, 2022 https://doi.org/10.1016/j.energy.2022.123324
 
 **Feel free to use/improve the code/model as needed and submit pull requests.**
 
