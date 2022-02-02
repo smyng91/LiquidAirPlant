@@ -39,11 +39,7 @@ You can find all component models under
 ```
 defined as MATLAB functions. If you want to model and simulate other plant configurations, you can follow the same system assembly convention as **model_X.m** where **x** is AA, AANG, RAANG, or AAS. 
 
-You may also add new component models as functions--
+You may also add new component models as functions, e.g., 
 ```MATLAB
-function [W, T_out, X_dest] = fcn_compressor( COMPRESSOR, AMBIENT )
+function [out1, out2,...,out] = fcn_componentname( struct1, struct2,...,struct )
 ```
-
-
-
-
