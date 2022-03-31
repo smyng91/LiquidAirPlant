@@ -13,7 +13,7 @@ Please cite the following paper if you reference/use the code
 
 ## Dependencies
 * [MATLAB 2021a or above](https://www.mathworks.com/products/matlab.html)
-* [CoolProp for MATLAB](http://www.coolprop.org/coolprop/wrappers/MATLAB/index.html). You may need to install CoolProp from source for Python 3.8 or above.
+* [CoolProp for MATLAB](http://www.coolprop.org/coolprop/wrappers/MATLAB/index.html). You may need to install CoolProp from source for Python 3.8 or above. Read [THIS](http://www.coolprop.org/coolprop/wrappers/Python/index.html) for manual installation.
 
 ## Quickstart
 After cloning the repository, run
