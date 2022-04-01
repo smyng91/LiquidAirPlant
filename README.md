@@ -9,6 +9,8 @@ LiquidAirPlant is a MATLAB code allowing its users to model various liquid air p
 Please cite the following paper if you reference/use the code
 > S. Yang, _Solar-driven liquid air power plant modeling, design space exploration, and multi-objective optimization_, Energy, 2022 [https://doi.org/10.1016/j.energy.2022.123324](https://doi.org/10.1016/j.energy.2022.123324)
 
+**Please note that the PTC rim angle in the paper should be 70 degrees, not 50 degrees.**
+
 **Feel free to use/improve the code/model as needed and submit pull requests.**
 
 ## Dependencies
