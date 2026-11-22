@@ -7,6 +7,9 @@ function [y, PLANT, COMP] = model_AANG( T, PARAM )
 %     T(3:4)  regenerator cold/hot outlet
 %     T(5)    LP turbine outlet (regenerator hot inlet)
 %
+%   Fuel: PARAM.mdot_combus1/2 [kg/s] to combustors 1/2, PARAM.LHV_NG [J/kg];
+%   the fuel mass joins the working fluid.
+%
 %   [y, PLANT, COMP] = MODEL_AANG( T, PARAM ) also returns the plant
 %   performance (including the T-s state points in PLANT.Ts = [s, T]) and
 %   the component structs.
@@ -46,7 +49,7 @@ y(2) = ( x(2) - PREHEATER.T_h_out )/T0;
 REGENERATOR.FLUID_h = PARAM.FLUID;
 REGENERATOR.FLUID_c = PARAM.FLUID;
 REGENERATOR.mdot_c = PREHEATER.mdot_c;
-REGENERATOR.mdot_h = REGENERATOR.mdot_c;
+REGENERATOR.mdot_h = REGENERATOR.mdot_c + PARAM.mdot_combus1 + PARAM.mdot_combus2;   % LP turbine exhaust
 REGENERATOR.T_h_in = T(5)*T0;
 REGENERATOR.T_c_in = PREHEATER.T_c_out;
 REGENERATOR.p_c_in = PREHEATER.p_c_out;
@@ -66,9 +69,10 @@ COMBUST1.T_in = REGENERATOR.T_c_out;
 COMBUST1.p_in = REGENERATOR.p_c_out;
 COMBUST1.p_out = COMBUST1.p_in;
 COMBUST1.mdot = REGENERATOR.mdot_c;
-COMBUST1.Q = PARAM.Q_NG/2;
+COMBUST1.mdot_fuel = PARAM.mdot_combus1;
+COMBUST1.Q = PARAM.mdot_combus1*PARAM.LHV_NG;
 COMBUST1.NTU = PARAM.NTU_combus1;
-[COMBUST1.T_out, COMBUST1.X_dest] = fcn_combustor( COMBUST1, PARAM );
+[COMBUST1.T_out, COMBUST1.X_dest, COMBUST1.mdot_out] = fcn_combustor( COMBUST1, PARAM );
 
 % HP turbine
 TURBINE_HP.FLUID = PARAM.FLUID;
@@ -76,7 +80,7 @@ TURBINE_HP.eta_is = PARAM.eta_turbine;
 TURBINE_HP.p_in = COMBUST1.p_out;
 TURBINE_HP.p_out = PARAM.p_int;
 TURBINE_HP.T_in = COMBUST1.T_out;
-TURBINE_HP.mdot = COMBUST1.mdot;
+TURBINE_HP.mdot = COMBUST1.mdot_out;
 [TURBINE_HP.W, TURBINE_HP.T_out, TURBINE_HP.X_dest] = fcn_turbine( TURBINE_HP, PARAM );
 
 % combustor 2
@@ -85,9 +89,10 @@ COMBUST2.T_in = TURBINE_HP.T_out;
 COMBUST2.p_in = TURBINE_HP.p_out;
 COMBUST2.p_out = COMBUST2.p_in;
 COMBUST2.mdot = TURBINE_HP.mdot;
-COMBUST2.Q = PARAM.Q_NG/2;
+COMBUST2.mdot_fuel = PARAM.mdot_combus2;
+COMBUST2.Q = PARAM.mdot_combus2*PARAM.LHV_NG;
 COMBUST2.NTU = PARAM.NTU_combus2;
-[COMBUST2.T_out, COMBUST2.X_dest] = fcn_combustor( COMBUST2, PARAM );
+[COMBUST2.T_out, COMBUST2.X_dest, COMBUST2.mdot_out] = fcn_combustor( COMBUST2, PARAM );
 
 % LP turbine
 TURBINE_LP.FLUID = PARAM.FLUID;
@@ -95,7 +100,7 @@ TURBINE_LP.eta_is = PARAM.eta_turbine;
 TURBINE_LP.p_in = COMBUST2.p_out;
 TURBINE_LP.p_out = PARAM.p0;
 TURBINE_LP.T_in = COMBUST2.T_out;
-TURBINE_LP.mdot = COMBUST2.mdot;
+TURBINE_LP.mdot = COMBUST2.mdot_out;
 [TURBINE_LP.W, TURBINE_LP.T_out, TURBINE_LP.X_dest] = fcn_turbine( TURBINE_LP, PARAM );
 y(5) = ( TURBINE_LP.T_out - REGENERATOR.T_h_in )/T0;
 
@@ -105,7 +110,8 @@ if ~full, return; end
 % (2017) 522-529
 PLANT.W_t = TURBINE_HP.W + TURBINE_LP.W;
 PLANT.W_net = PLANT.W_t - PUMP.W;
-PLANT.W_in = PARAM.e_liq*PUMP.mdot + PARAM.eta_cc*PARAM.Q_NG;
+PLANT.Q_fuel = COMBUST1.Q + COMBUST2.Q;
+PLANT.W_in = PARAM.e_liq*PUMP.mdot + PARAM.eta_cc*PLANT.Q_fuel;
 PLANT.eta_rt = PLANT.W_net/PLANT.W_in;
 
 % T-s diagram state points [s, T]
