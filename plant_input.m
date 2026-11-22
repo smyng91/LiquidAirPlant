@@ -1,3 +1,6 @@
+% Input file of the ambient air/solar (AAS) liquid air power plant.
+% Run from driver.m (the components folder must be on the MATLAB path).
+
 % ambient
 AMBIENT.T0 = 298;
 AMBIENT.p0 = 0.1e6;
@@ -5,8 +8,7 @@ AMBIENT.u0 = 0.2;
 AMBIENT.FLUID = 'AIR';
 AMBIENT.T_sun = 5770;
 AMBIENT.Gb = 800;
-AMBIENT.h0 = py.CoolProp.CoolProp.PropsSI('Hmass','P',AMBIENT.p0,'T',AMBIENT.T0, AMBIENT.FLUID);
-AMBIENT.s0 = py.CoolProp.CoolProp.PropsSI('Smass','P',AMBIENT.p0,'T',AMBIENT.T0, AMBIENT.FLUID);
+[AMBIENT.h0, AMBIENT.s0] = fcn_props(AMBIENT.FLUID, 'PT', AMBIENT.p0, AMBIENT.T0, 'H', 'S');
 
 % liquid air storage
 PLANT.FLUID = 'AIR';
@@ -20,8 +22,7 @@ PLANT.p_pump = 20e6;
 PLANT.mdot_preheater = 0.33;
 % PLANT.p_int = AMBIENT.p0 + (PLANT.p_pump-AMBIENT.p0)*.01;
 PLANT.p_int = PLANT.p_pump/6.72;
-PLANT.h_la_in = py.CoolProp.CoolProp.PropsSI('Hmass','P',PLANT.p_store,'T',PLANT.T_store, PLANT.FLUID);
-PLANT.s_la_in = py.CoolProp.CoolProp.PropsSI('Smass','P',PLANT.p_store,'T',PLANT.T_store, PLANT.FLUID);
+[PLANT.h_la_in, PLANT.s_la_in] = fcn_props(PLANT.FLUID, 'PT', PLANT.p_store, PLANT.T_store, 'H', 'S');
 
 % efficiency
 PLANT.eta_pump = 0.75;
@@ -32,9 +33,15 @@ PLANT.eta_comp = 0.75;
 PTC.mdot = 9.51;
 PTC.FLUID = 'INCOMP::S800';
 PTC.eta_opt = 0.726;
-PTC.p_in = 0.2e6;
+% HTF loop inlet pressure. It must keep the oil liquid after the receiver
+% pressure drop (~0.4 MPa here): S800 boils above 0.36 MPa at 550 K and
+% 1.37 MPa at its 671 K limit, so 0.2 MPa is infeasible.
+PTC.p_in = 2e6;
 PTC.d_c = 0.115;
 PTC.d_r = 0.07;
+PTC.d_ri = PTC.d_r/1.05;    % receiver inner diameter
+PTC.k_r = 280;              % receiver wall thermal conductivity [W/m/K]
+PTC.roughness = 1e-3;       % receiver inner wall absolute roughness [m]
 PTC.e_c = 0.86;
 PTC.e_r = 0.14;
 PTC.sigma = 5.67e-8;
@@ -42,8 +49,8 @@ PTC.rim = 70;
 PTC.L = 122.7;
 PTC.L_f = 1.84;
 PTC.A_ap = 4*PTC.L_f*tand(PTC.rim/2)*PTC.L;
-PTC.A_r = pi()*PTC.d_r*PTC.L; 
-PTC.A_c = pi()*PTC.d_c*PTC.L; 
+PTC.A_r = pi()*PTC.d_r*PTC.L;
+PTC.A_c = pi()*PTC.d_c*PTC.L;
 PTC.Cr = PTC.A_ap/PTC.A_r;
 
 % SHX
